@@ -1,0 +1,69 @@
+<?php
+
+namespace app\models;
+
+use Yii;
+use yii\base\Model;
+use yii\data\ActiveDataProvider;
+use app\models\Gerencias;
+
+/**
+ * GerenciasSearch represents the model behind the search form about `app\models\Gerencias`.
+ */
+class GerenciasSearch extends Gerencias
+{
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            [['id', 'jefe', 'visible'], 'integer'],
+            [['nombre', 'mail'], 'safe'],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function scenarios()
+    {
+        // bypass scenarios() implementation in the parent class
+        return Model::scenarios();
+    }
+
+    /**
+     * Creates data provider instance with search query applied
+     *
+     * @param array $params
+     *
+     * @return ActiveDataProvider
+     */
+    public function search($params)
+    {
+        $query = Gerencias::find();
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'jefe' => $this->jefe,
+            'visible' => $this->visible,
+        ]);
+
+        $query->andFilterWhere(['like', 'nombre', $this->nombre])
+            ->andFilterWhere(['like', 'mail', $this->mail]);
+
+        return $dataProvider;
+    }
+}
