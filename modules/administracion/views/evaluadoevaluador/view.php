@@ -6,34 +6,55 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\modules\administracion\models\EvaluadoEvaluador */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Evaluado Evaluadors', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="evaluado-evaluador-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
+       <?php
+            if(Yii::$app->user->identity->admin)
+            {   
+              //  echo Html::a('Modificar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']);
+              //  echo Html::a('    ');
+                echo Html::a('Eliminar', ['delete', 'id' => $model->id], [
+                    'class' => 'btn btn-danger',
+                    'data' => [
+                        'confirm' => 'Está seguro de eliminar este item?',
+                        'method' => 'post',
+                    ],
+                ]);
+            }
+        ?>
     </p>
 
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
-            'encuesta',
-            'evaluado',
-            'evaluador',
-            'visible',
+            [
+                'label'=>'Encuesta',
+                'attribute'=>'encuesta0.descripcion',
+            ],
+            [
+                'label'=>'Evaluado',
+                'attribute'=>'evaluado0.nombre',
+            ],
+            [
+                'label'=>'Evaluador',
+                'attribute'=>'evaluador0.nombre',
+            ],
+            [
+            'label'=>'Visible',            
+            'format'=>'HTML',
+            'value'=>($model->visible==1)?'<span class="glyphicon glyphicon-ok  text-success"></span>':'<span class=" text-danger glyphicon glyphicon-remove"></span>',
+            ],
         ],
     ]) ?>
 
+    <p>
+            <?= Html::a('Volver', ['index'], ['class'=>'btn btn-primary']) ?>
+
+    </p>        
+
 </div>
+

@@ -6,9 +6,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\modules\administracion\models\EvaluadoEvaluador */
 
-$this->title = 'Create Evaluado Evaluador';
-$this->params['breadcrumbs'][] = ['label' => 'Evaluado Evaluadors', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = 'Agregar evaluado - evaluador';
 ?>
 <div class="evaluado-evaluador-create">
 
