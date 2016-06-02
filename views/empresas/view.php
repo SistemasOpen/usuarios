@@ -14,12 +14,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
+    <div class="btn-toolbar">
         <?php
             if(Yii::$app->user->identity->admin)
             {   
                 echo Html::a('Modificar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']);
-                echo Html::a('    ');
                 echo Html::a('Eliminar', ['delete', 'id' => $model->id], [
                     'class' => 'btn btn-danger',
                     'data' => [
@@ -30,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
             }
         ?>
           
-     </p>
+     </div>
 
     <?= DetailView::widget([
         'model' => $model,

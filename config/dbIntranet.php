@@ -6,5 +6,5 @@ return [
 	            'dsn' => 'dblib:host=192.168.2.22;dbname=intranet',
 	            'username' => 'sa',
 	            'password' => 'OpenSports_1699',
-	            'charset' => 'utf-8',
+//	            'charset' => 'utf-8',
 ];

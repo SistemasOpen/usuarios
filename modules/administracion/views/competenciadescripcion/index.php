@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\modules\administracion\models\CompetenciadescripcionSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Competenciadescripcions';
+$this->title = 'Competencias';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="competenciadescripcion-index">
@@ -15,7 +15,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
+
     <p>
+        <div class="btn-toolbar">
         <?= Html::a('Volver', ['/memo/ultimasnovedades'], ['class' => 'btn btn-success']) ?>
         <?PHP 
             if(Yii::$app->user->identity->admin)
@@ -23,14 +25,20 @@ $this->params['breadcrumbs'][] = $this->title;
                 echo Html::a('Agregar', ['create'], ['class' => 'btn btn-success']);
             }
         ?>
+        </div>
     </p>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            'Texto',
-            'idTipoComp0.descripcion',
+            [   'label'=>'Texto',
+                'format'=>'raw',
+                'value'=> function ($model) {
+                    return utf8_encode($model['Texto']);
+                },
+            ],
+             'idTipoComp0.descripcion',
             [   
                 'label'     => 'Visible',
                 'format'    => 'HTML',

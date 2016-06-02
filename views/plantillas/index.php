@@ -25,11 +25,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
 
             [
-            'label'=>utf8_decode('Código'),
+            'label'=>'Código',
             'attribute'=>'id',
             ],
             [
-            'label'=>utf8_decode('Descripción'),
+            'label'=>'Descripción',
             'attribute'=>'nombre',
             ],
             [

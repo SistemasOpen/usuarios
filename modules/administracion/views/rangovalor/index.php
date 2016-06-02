@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\modules\administracion\models\RangovalorSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Rangovalors';
+$this->title = 'Rangos';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="rangovalor-index">

@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="areas-index">
 
-    <h1><?= Html::encode(utf8_decode($this->title)) ?></h1>
+    <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
@@ -30,11 +30,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             [
-            'label'=>utf8_decode('Código'),
+            'label'=>'Código',
             'attribute'=>'id',
             ],
             [
-            'label'=>utf8_decode('Descripción'),
+            'label'=>'Descripción',
             'attribute'=>'nombre',
             ],
             [
@@ -50,7 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'attribute'=>'direccion',
             ],
             [
-            'label'=>utf8_decode('Teléfono'),
+            'label'=>'Teléfono',
             'attribute'=>'telefono',
             ],
             // 'mail',

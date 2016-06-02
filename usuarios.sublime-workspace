@@ -3,10 +3,74 @@
 	{
 		"selected_items":
 		[
+			[
+				"usu",
+				"usuarios"
+			],
+			[
+				"for",
+				"foreach	foreach …"
+			]
 		]
 	},
 	"buffers":
 	[
+		{
+			"file": "views/depositosencargados/view.php",
+			"settings":
+			{
+				"buffer_size": 1283,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "views/depositos/rotulos.php",
+			"settings":
+			{
+				"buffer_size": 3534,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "views/usuario/listarcumple.php",
+			"settings":
+			{
+				"buffer_size": 1815,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "views/memo/index.php",
+			"settings":
+			{
+				"buffer_size": 3100,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "views/plantillas/index.php",
+			"settings":
+			{
+				"buffer_size": 1267,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "views/areas/index.php",
+			"settings":
+			{
+				"buffer_size": 1945,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "models/Areas.php",
+			"settings":
+			{
+				"buffer_size": 2360,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -21,7 +85,7 @@
 		[
 			[
 				"git",
-				"Git: Commit"
+				"Git: Status"
 			],
 			[
 				"sublimegit",
@@ -58,11 +122,18 @@
 	},
 	"expanded_folders":
 	[
-		"/C/DESARROLLO/WEB/usuarios",
-		"/C/DESARROLLO/WEB/usuarios/modules/administracion"
+		"/C/DESARROLLO/WEB/usuarios/models"
 	],
 	"file_history":
 	[
+		"/C/DESARROLLO/WEB/usuarios/controllers/DepositosencargadosController.php",
+		"/C/DESARROLLO/WEB/usuarios/models/DepositosencargadosSeach.php",
+		"/C/DESARROLLO/WEB/usuarios/models/Depositosencargados.php",
+		"/C/DESARROLLO/WEB/usuarios/modules/administracion/controllers/EncuestasController.php",
+		"/C/DESARROLLO/WEB/usuarios/views/usuario/index.php",
+		"/C/DESARROLLO/WEB/usuarios/views/memo/index.php",
+		"/C/DESARROLLO/WEB/usuarios/views/empresas/index.php",
+		"/C/DESARROLLO/WEB/usuarios/views/empresas/view.php",
 		"/C/DESARROLLO/WEB/usuarios/views/layouts/main.php",
 		"/C/DESARROLLO/WEB/usuarios/views/site/error.php",
 		"/C/DESARROLLO/WEB/usuarios/views/site/index.php",
@@ -75,7 +146,6 @@
 		"/C/DESARROLLO/WEB/usuarios/views/departamentos/view.php",
 		"/C/DESARROLLO/WEB/usuarios/views/usuario/listarcumple.php",
 		"/C/DESARROLLO/WEB/usuarios/views/usuario/view.php",
-		"/C/DESARROLLO/WEB/usuarios/views/memo/index.php",
 		"/C/DESARROLLO/WEB/usuarios/views/memo/view.php",
 		"/C/DESARROLLO/WEB/usuarios/views/plantillas/index.php",
 		"/C/DESARROLLO/WEB/usuarios/views/plantillas/view.php",
@@ -88,7 +158,6 @@
 		"/C/DESARROLLO/WEB/usuarios/views/depositos/rotulos.php",
 		"/C/DESARROLLO/WEB/usuarios/views/depositos/update.php",
 		"/C/DESARROLLO/WEB/usuarios/views/depositos/view.php",
-		"/C/DESARROLLO/WEB/usuarios/views/empresas/view.php",
 		"/C/DESARROLLO/WEB/usuarios/views/funciones/create.php",
 		"/C/DESARROLLO/WEB/usuarios/views/funciones/index.php",
 		"/C/DESARROLLO/WEB/usuarios/views/funciones/update.php",
@@ -149,8 +218,240 @@
 	"groups":
 	[
 		{
+			"selected": 6,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "views/depositosencargados/view.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1283,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1283,
+								1283
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "views/depositos/rotulos.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3534,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3534,
+								3534
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1130.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "views/usuario/listarcumple.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1815,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1401,
+								1401
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 399.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "views/memo/index.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3100,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								411,
+								411
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 28.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "views/plantillas/index.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1267,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1267,
+								1267
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 9.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "views/areas/index.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1945,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1914,
+								1914
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "models/Areas.php",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 2360,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1524,
+								1524
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 741.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -196,6 +497,10 @@
 	"output.git-init":
 	{
 		"height": 100.0
+	},
+	"output.git-pull":
+	{
+		"height": 124.0
 	},
 	"output.git-push":
 	{
@@ -247,7 +552,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 198.0,
+	"side_bar_width": 351.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

@@ -23,14 +23,16 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
     <p>
-        <?= Html::a('Volver', ['memo/ultimasnovedades'], ['class' => 'btn btn-success']) ?>
-        <?PHP 
-            if(Yii::$app->user->identity->admin)
-            {           
-                echo Html::a('Agregar usuario', ['create'], ['class' => 'btn btn-success']);
-                echo Html::a('Importar usuarios', ['importarusu'], ['class' => 'btn btn-success']);
-            }
-        ?>
+        <div class="btn-toolbar">    
+            <?= Html::a('Volver', ['memo/ultimasnovedades'], ['class' => 'btn btn-success']) ?>
+            <?PHP 
+                if(Yii::$app->user->identity->admin)
+                {           
+                    echo Html::a('Agregar usuario', ['create'], ['class' => 'btn btn-success']);
+                    echo Html::a('Importar usuarios', ['importarusu'], ['class' => 'btn btn-success']);
+                }
+            ?>
+        </div>
     </p>
 
     <?= GridView::widget([

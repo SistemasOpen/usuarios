@@ -39,8 +39,8 @@ class Competenciadescripcion extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['Texto', 'idTipoComp'], 'required'],
-            [['Texto'], 'string'],
+            [['texto', 'idTipoComp'], 'required'],
+            [['texto'], 'string'],
             [['idTipoComp', 'visible'], 'integer']
         ];
     }

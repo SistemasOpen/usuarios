@@ -44,7 +44,7 @@ AppAsset::register($this);
                     'options' =>['class'=>'carting']];
 
                 $items[]=[
-                    'label' =>utf8_decode('Cumpleaños'),
+                    'label' =>'Cumpleaños',
                     'url' => ['/usuario/listarcumple'],
                     'options' =>['class'=>'carting']];
 
@@ -103,6 +103,18 @@ AppAsset::register($this);
                          'url' => ['/usuario/mostrarlegajosucursal'], 
                          'options' =>['class'=>'carting'],],
 
+                        ['label'=>'Encargados de locales',
+                         'url' => ['/depositosencargados/index'], 
+                         'options' =>['class'=>'carting'],],
+
+                        ['label'=>'Cargar foto',
+                         'url' => ['/usuario/cargarfoto'], 
+                         'options' =>['class'=>'carting'],],
+
+                        ['label'=>'Ver dependencias',
+                         'url' => ['/usuario/verdependencia'], 
+                         'options' =>['class'=>'carting'],],
+
                     ],
                  ];
 
@@ -139,6 +151,11 @@ AppAsset::register($this);
                         'url' => ['/administracion/consignas'], 
                         'options' =>['class'=>'carting'],],
 
+                        ['label'=>'Evaluadores',
+                        'url' => ['/administracion/evaluadoevaluador'], 
+                        'options' =>['class'=>'carting'],],
+
+
                         ['label'=>'Encuestas',
                         'url' => ['/administracion/encuestas'], 
                         'options' =>['class'=>'carting'],],
@@ -157,6 +174,10 @@ AppAsset::register($this);
 
                         ['label'=>'Registro de movimientos',
                         'url' => ['/administracion/registro'], 
+                        'options' =>['class'=>'carting'],],
+
+                        ['label'=>'Completar Encuesta',
+                        'url' => ['/administracion/encuestas/encuestashabilitadas'], 
                         'options' =>['class'=>'carting'],],
                     ],
                 ];
@@ -203,13 +224,13 @@ AppAsset::register($this);
                     'options' =>['class'=>'carting']];
 
                 $items[]=[
-                    'label' => 'Salir (' . Yii::$app->user->identity->nombre . ')',
+                    'label' => 'Logout (' . Yii::$app->user->identity->nombre . ')',
                     'url' => ['/site/logout'],
                     'linkOptions' => ['data-method' => 'post']
                 ];
 
 }else{
-            $items[]= ['label' => utf8_decode('Iniciar sesión'), 'url' => ['/site/login']];
+            $items[]= ['label' => 'Iniciar sesión', 'url' => ['/site/login']];
         }
 
 echo NavX::widget([
@@ -229,7 +250,7 @@ echo NavX::widget([
 
     NavBar::end();
     ?>
-
+  
     <div class="container">
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],

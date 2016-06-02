@@ -64,7 +64,7 @@ class Encuestacontenido extends \yii\db\ActiveRecord
     public function getCompetencia0()
     {
         $model = Competenciadescripcion::find()->where(['id'=>$this->idCompetencia])->One();
-        $model->Texto=utf8_encode($model->Texto);
+        $model->texto=utf8_encode($model->texto);
         return $model;
     }
     public function getTipocompetencia0()

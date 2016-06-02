@@ -16,7 +16,6 @@ use app\models\Empresas;
 
 ?>
 <div class="Rotulos">
-
  
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -46,7 +45,7 @@ use app\models\Empresas;
                     });
                  }'
                 , 'prompt'=>'Seleccione una empresa'
-            ])->label(utf8_decode('Empresa de orígen'));
+            ])->label('Empresa de orígen');
             
      ?>
 
@@ -54,8 +53,8 @@ use app\models\Empresas;
             [
                 'id'=>'deposito_o',
                 'name' => 'deposito_o',
-                'prompt'=>utf8_decode('Elija un depósito')
-            ])->label(utf8_decode('Depósito de orígen')); 
+                'prompt'=>'Elija un depósito'
+            ])->label('Depósito de orígen'); 
     ?>
 
 
@@ -86,8 +85,8 @@ use app\models\Empresas;
     <?= $form->field($model, 'id')->dropDownList(array(),
             [
                 'name' => 'deposito_d',
-                'prompt'=>utf8_decode('Elija un depósito')
-            ])->label(utf8_decode('Depósito de destino')); 
+                'prompt'=>'Elija un depósito'
+            ])->label('Depósito de destino'); 
     ?>
 
 </div>

@@ -16,19 +16,19 @@ $this->title = 'Administración de memos';
         <?php // = Html::a('Imprimir', ['importarusu'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <h1><?= Html::encode(utf8_decode($this->title)) ?></h1>
+    <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
     <p>
-        <?= Html::a('Volver', ['memo/ultimasnovedades'], ['class' => 'btn btn-success']) ?>
-        <?PHP 
-            if(Yii::$app->user->identity->admin)
-            {           
-                echo Html::a('Agregar', ['create'], ['class' => 'btn btn-success']); 
-            }
-        ?>
+        <div class="btn-toolbar">
+            <?= Html::a('Volver', ['memo/ultimasnovedades'], ['class' => 'btn btn-success']) ?>
+            <?PHP 
+                if(Yii::$app->user->identity->admin)
+                {           
+                    echo Html::a('Agregar', ['create'], ['class' => 'btn btn-success']); 
+                }
+            ?>
+        </div>
     </p>
-
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -52,7 +52,7 @@ $this->title = 'Administración de memos';
             'contentOptions' => ['style'=>'width:30px'],
             ],
            [
-            'label'=>utf8_decode('Título'),           
+            'label'=>'Título',           
             'format'=>'raw',
             'value'=> function ($model) {
                         return utf8_encode($model['titulo']);

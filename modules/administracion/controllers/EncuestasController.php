@@ -7,11 +7,20 @@ use app\modules\administracion\models\Encuesta;
 use app\modules\administracion\models\EncuestaSearch;
 use app\modules\administracion\models\Tipomovimiento;
 use app\modules\administracion\models\Registro;
+use app\modules\administracion\models\Evaluadoevaluador;
+use app\modules\administracion\models\Encuestadetalle;
+use app\modules\administracion\models\Encuestavalores;
+use app\modules\administracion\models\Encuestapublica;
+use app\modules\administracion\models\Encuestaaspecto;
+use app\modules\administracion\models\Encuestaobjetivo;
+use app\models\Usuario;
+use app\models\Sectores;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
+use yii\filters\AccessControl;
 
 /**
  * EncuestasController implements the CRUD actions for Encuesta model.
@@ -21,6 +30,44 @@ class EncuestasController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['login'],
+                 'rules' => [
+                        [
+                            'actions' => ['login'],
+                            'allow' => true,
+                            'roles' => ['?'],
+                        ],
+                        [
+                            'actions' => [  'logout', 
+                                            'index', 
+                                            'view', 
+                                            'create', 
+                                            'update', 
+                                            'delete', 
+                                            'categorias', 
+                                            'evaluador',
+                                            'publicarencuesta',
+                                            'encuestaspublicadas',
+                                            'cancelarpublicacion',
+                                            'encuestasfinalizadas',
+                                            'encuestashabilitadas',
+                                            'completarencuesta',
+                                            'mostrarfuncioncompleta',
+                                            'mostrarresultadosencuesta',
+                                            'actualizardetalle',
+                                            'completaraspectos',
+                                            'completarobjetivo',
+                                            'completargracias',
+                                            'finalizarencuesta'
+                                             ],
+                            'allow' => true,
+                            'roles' => ['@'],
+                        ],
+                    ],
+            ],
+
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -69,7 +116,7 @@ class EncuestasController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
             $registro = new Registro();
-            $registro->usuario = Yii::$app->user->identity->legajo;
+            $registro->usuario = Yii::$app->user->identity->id;
             $registro->fecha = date('Ymd');
             $registro->tipomovimiento = 1; //generar una nueva encuesta esta fijo por tabla
             $registro->encuesta = $model->id;
@@ -95,7 +142,7 @@ class EncuestasController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $registro = new Registro();
-            $registro->usuario = Yii::$app->user->identity->legajo;
+            $registro->usuario = Yii::$app->user->identity->id;
             $registro->fecha = date('Ymd');
             $registro->tipomovimiento = 3; //modificar encuesta esta fijo por tabla
             $registro->encuesta = $id;
@@ -156,12 +203,53 @@ class EncuestasController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
                 $registro = new Registro();
-                $registro->usuario = Yii::$app->user->identity->legajo;
+                $registro->usuario = Yii::$app->user->identity->id;
                 $registro->fecha = date('Ymd');
                 $registro->tipomovimiento = 5; //publicar encuesta esta fijo por tabla
                 $registro->observaciones = 'Vigencia: ' . $model->fDesde . ' hasta ' . $model->fHasta;
                 $registro->encuesta = $id;
                 $registro->save();
+
+                /*
+                //Primer Caso de Jefe a Subordinado    
+                $usuarios = Usuario::find()->where('activo = 1')->All();
+
+                foreach ($usuarios as $usuario) 
+                {
+                    $jefe = Sectores::find()->where('id = ' . $usuario->sector )->One();
+                    $evaluadorevaluado = new Evaluadoevaluador(); 
+                    $evaluadorevaluado->encuesta = $id;
+                    $evaluadorevaluado->evaluado = $usuario->id;
+                    $evaluadorevaluado->evaluador = $jefe->jefe;
+                    $evaluadorevaluado->visible = 1;
+                    $evaluadorevaluado->save()                   
+                }
+
+                //Segundo caso de Subordinado a Jefe
+                foreach ($usuarios as $usuario) 
+                {
+                    $jefe = Sectores::find()->where('id = ' . $usuario->sector )->One();
+                    $evaluadorevaluado = new Evaluadoevaluador(); 
+                    $evaluadorevaluado->encuesta = $id;
+                    $evaluadorevaluado->evaluado = $jefe->jefe;
+                    $evaluadorevaluado->evaluador = $usuario->id; 
+                    $evaluadorevaluado->visible = 1;
+                    $evaluadorevaluado->save()                   
+                }
+
+                //Tercer caso Autoevaluacion
+                foreach ($usuarios as $usuario) 
+                {
+                    $evaluadorevaluado = new Evaluadoevaluador(); 
+                    $evaluadorevaluado->encuesta  = $id;
+                    $evaluadorevaluado->evaluado  = $usuario->id; 
+                    $evaluadorevaluado->evaluador = $usuario->id; 
+                    $evaluadorevaluado->visible   = 1;
+                    $evaluadorevaluado->save()                   
+                }                
+
+                */
+
 
             return $this->redirect(['encuestaspublicadas']);
         } else {
@@ -206,7 +294,7 @@ class EncuestasController extends Controller
             $modelo = Encuesta::find()->where('id = ' . $encuesta)->One();
 
             $registro = new Registro();
-            $registro->usuario = Yii::$app->user->identity->legajo;
+            $registro->usuario = Yii::$app->user->identity->id;
             $registro->fecha = date('Ymd');
             $registro->tipomovimiento = 6; //cancelar encuesta esta fijo por tabla
             $registro->observaciones = 'Vigencia: ' . $modelo->fDesde . ' hasta ' . $modelo->fHasta;
@@ -244,4 +332,279 @@ class EncuestasController extends Controller
 
     }
 
+
+    public function actionEncuestashabilitadas()
+    {
+        try
+        {  
+             
+            if ( Yii::$app->user->isGuest)
+                $this->redirect(Yii::$app->urlManager->createUrl(['site/login']));
+                            
+            $sql1 =   'pa_enc_encuestas_habilitadas ' . Yii::$app->user->identity->id;
+            $command1 = Yii::$app->dbIntranet->createCommand($sql1);
+            $list1 = $command1->queryAll();
+        }
+        catch (Exception $e)
+        {
+          Log::trace("Error : ".$e);
+          throw new Exception("Error : ".$e);  
+        }
+
+        if (count($list1) == 0)
+            Yii::$app->session->setFlash('error','No se encuentran Encuestas para Completar');  
+
+        $dpDatos1 = new ArrayDataProvider(['allModels' => $list1 ]);
+        return $this->render('encuestashabilitadas', ['model' => $dpDatos1 ]);
+    } 
+
+    public function actionCompletarencuesta($id, $fun )
+    {
+         try 
+         {
+
+            $sql1 =   'pa_enc_ver_cabeza ' . $id;
+            $command1 = Yii::$app->dbIntranet->createCommand($sql1);
+            $list1 = $command1->queryAll();
+            
+            $sql2 =   'pa_enc_ver_detalle ' . $id . ', ' . $fun ;
+            $command2 = Yii::$app->dbIntranet->createCommand($sql2);
+            $list2 = $command2->queryAll();
+         }
+         catch (Exception $e) 
+         {
+            Log::trace("Error : ".$e);
+            throw new Exception("Error : ".$e);
+         }
+
+         if (count($list2) > 0)
+         {
+             $session = yii::$app->session;
+             $session['encuesta'] = ['id' => $id, 'idfun' => $fun, 'descfun' => $list2[0]['Funcion'] ];
+
+             $dpDatos1 = new ArrayDataProvider(['allModels' => $list1 ]);
+             $dpDatos2 = new ArrayDataProvider(['allModels' => $list2 ]);
+             $dpDatos2->pagination = false;
+             return $this->render('completarencuesta', ['cabeza'    => $dpDatos1, 
+                                                        'detalle'   => $dpDatos2, 
+                                                        'id'        => $id,
+                                                        'rango'     => $list2[0]['Rango'],
+                                                        'inicio'    => '1',
+                                                       ]);
+        }
+        else
+        {
+            //Yii::$app->runAction('mostrarresultadosencuesta', ['id' => $id]);
+            try 
+            {
+            
+                $sql1 =   'pa_enc_mostrar_resultados_encuesta ' . $id;
+                $command1 = Yii::$app->dbIntranet->createCommand($sql1);
+                $list1 = $command1->queryAll();
+            
+                if (count($list1) > 0)
+                {
+                    $session = yii::$app->session;
+                    $session['encuesta'] = ['id' => $id, 'idfun' => '0', 'descfun' => '' ];
+
+                    $total = 0;
+                    for ($i=0; $i < count($list1); $i++) 
+                    { 
+                        $total += $list1[$i]['Totales'];    
+                    }
+
+                    $valor = Array ( 'id' => (count($list1) + 1), 'Competencia' => 'Total Competencias', 'Totalfun' => '', 'Cantfun' => '', 'Ponderacion' => '', 'Subtotal' => '', 'Totales' => $total );
+                    array_push($list1, $valor);
+
+                    $model = new ArrayDataProvider(['allModels' => $list1 ]);
+                    return $this->render('mostrarresultadosencuesta', [ 'model' => $model, 
+                                                                        'id'    => $id
+                                                                      ]);       
+                }
+                else
+                {
+                    Yii::$app->session->setFlash('error','Faltan completar Items, por favor completelos');  
+                    return $this->redirect(['completarencuesta', 'id' => $id, 'fun'=>'1'] );
+                }
+            }    
+            catch (Exception $e) 
+            {
+                Log::trace("Error : ".$e);
+                throw new Exception("Error : ".$e);
+            }    
+        }
+    }
+
+    public function actionMostrarfuncioncompleta($id, $fun )
+    {
+
+         try 
+         {
+            //recupero los valores items totales de la encuesta y los que estan completos
+            $sql1 =   'pa_enc_verificar_encuesta_completa ' . $id . ', ' . $fun ;
+            $command1 = Yii::$app->dbIntranet->createCommand($sql1);
+            $list1 = $command1->queryOne();
+
+            //Si estan todo completos
+            if ( $list1['todos'] == $list1['completos'] )
+            {
+                $sql2 =   'pa_enc_sumar_encuesta_completa ' . $id . ', ' . $fun ;
+                $command2 = Yii::$app->dbIntranet->createCommand($sql2);
+                $total = $command2->queryScalar();  
+                
+                if($total > 0)
+                {
+                    $total = ($total / $list1['todos']);
+                    return $this->render('mostrarencuestacompleta', [   'id'      => $id,
+                                                                        'funcion' => $fun,
+                                                                        'todos'   => $list1['todos'],
+                                                                        'puntos'  => number_format($total,2,",",".") ]);       
+                }
+            }
+            else
+            {
+                Yii::$app->session->setFlash('error','Faltan completar Items, por favor completelos');  
+                return $this->redirect(['completarencuesta', 'id' => $id, 'fun'=>$fun] );
+            }
+        }    
+        catch (Exception $e) 
+        {
+            Log::trace("Error : ".$e);
+            throw new Exception("Error : ".$e);
+        }    
+    }
+
+    public function actionMostrarresultadosencuesta($id )
+    {
+
+         try 
+         {
+            //number_format($total,2,",",".")
+            $sql1 =   'pa_enc_mostrar_resultados_encuesta ' . $id;
+            $command1 = Yii::$app->dbIntranet->createCommand($sql1);
+            $list1 = $command1->queryAll();
+            
+            if (count($list1) > 0)
+                {
+                    $session = yii::$app->session;
+                    $session['encuesta'] = ['id' => $id, 'idfun' => '0', 'descfun' => '' ];
+
+                    $total = 0;
+                    for ($i=0; $i < count($list1); $i++) 
+                    { 
+                        $total += $list1[$i]['Totales'];    
+                    }
+
+                    $valor = Array ( 'id' => (count($list1) + 1), 'Competencia' => 'Total Competencias', 'Totalfun' => '', 'Cantfun' => '', 'Ponderacion' => '', 'Subtotal' => '', 'Totales' => $total );
+                    array_push($list1, $valor);
+         
+                    
+                    $model = new ArrayDataProvider(['allModels' => $list1 ]);
+                    return $this->render('mostrarresultadosencuesta', [ 'model' => $model, 
+                                                                        'id'    => $id
+                                                                      ]);       
+                }
+                else
+                {
+                    Yii::$app->session->setFlash('error','Faltan completar Items, por favor completelos');  
+                    return $this->redirect(['completarencuesta', 'id' => $id, 'fun'=>'1'] );
+                }
+        }    
+        catch (Exception $e) 
+        {
+            Log::trace("Error : ".$e);
+            throw new Exception("Error : ".$e);
+        }    
+    }
+
+
+    public function actionActualizardetalle($id, $valor)
+    {
+        try
+        {
+                $model = Encuestadetalle::find()->where('id = ' . $id)->One();
+                $model->seleccion = $valor;
+                $model->save();
+                      
+                \Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
+                return 'true';
+        }
+        catch (Exception $e) 
+        {
+            Log::trace("Error : ".$e);
+            return 'false';
+        }    
+    }
+
+    public function actionCompletaraspectos($id)
+    {
+        try
+        {
+            $model = new Encuestaaspecto(); //::find()->where('id = ' . $id)->All();
+            return $this->render('completaraspecto', ['model'=> $model, 'id' => $id]);
+
+        }
+        catch(Exception $e)
+        {
+            Log::trace("Error : ".$e);
+            throw new Exception("Error : ".$e);
+        }
+    }
+
+
+    public function actionCompletarobjetivo($id)
+    {
+        try
+        {
+            $model = new EncuestaObjetivo();
+            
+            if (Yii::$app->request->post()) 
+            {
+                $post = Yii::$app->request->post();
+                $model->idencuesta = $id;
+                $model->nivel = $post['rbnivel'];
+                $model->texto = $post['objetivo'];
+                $model->recomendacion = $post['rbreco'];
+                $model->save();
+
+                return $this->render('completargracias', ['id' => $id]);
+            }
+            
+            return $this->render('completarobjetivo', ['model'=> $model, 'id' => $id]);
+
+        }
+        catch(Exception $e)
+        {
+            Log::trace("Error : ".$e);
+            throw new Exception("Error : ".$e);
+        }
+    }
+
+    /*
+    public function actionCompletargracias($id)
+    {
+        return $this->render('completargracias', ['id'=>$id]);
+    }
+    */
+
+    public function actionFinalizarencuesta($id)
+    {
+        try
+        {
+            $model = EncuestaPublica::find()->where('id = ' . $id)->One();
+            if ($model != null)
+            {
+                $model->fecha = date('Ymd');
+                $model->save();
+            }
+            
+            return $this->goHome();
+
+        }
+        catch(Exception $e)
+        {
+            Log::trace("Error : ".$e);
+            throw new Exception("Error : ".$e);
+        }
+    }
 }

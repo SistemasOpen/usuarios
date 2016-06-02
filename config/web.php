@@ -3,10 +3,10 @@
 $params = require(__DIR__ . '/params.php');
 
 $config = [
-    'id' => 'basic',
+    'id' => 'usuarios',
     'basePath' => dirname(__DIR__),
     'language' => 'es-ES',
-    'charset' => 'ISO-8859-1',
+    'charset' => 'utf-8',
     'bootstrap' => ['log'],
     'modules' => [
    'datecontrol' =>  [
@@ -26,11 +26,15 @@ $config = [
         ],
         'user' => [
             'identityClass' => 'app\models\User',
-                         'identityCookie' => [
-                'name' => '_usuarios', // unique for frontend
+            'identityCookie' => 
+            [ 
+                'name' => '_usuarios', 
+                'enableAutoLogin' => false,
+                'enableSession' => true,
+                'authTimeout' =>120,
+                'loginUrl' => ['site/login'],
             ],
-            'enableAutoLogin' => false,
-        ],
+        ],    
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
@@ -67,7 +71,7 @@ if (YII_ENV_DEV) {
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = [
         'class' => 'yii\gii\Module',
-        'allowedIPs' => ['192.168.2.92']
+        'allowedIPs' => ['192.168.2.92', '192.168.2.96']
     ];
 }
 

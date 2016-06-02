@@ -18,8 +18,8 @@ class CompetenciadescripcionSearch extends Competenciadescripcion
     public function rules()
     {
         return [
-            [['id', 'idTipoComp', 'visible'], 'integer'],
-            [['Texto'], 'safe'],
+            [['id', 'idtipocomp', 'visible'], 'integer'],
+            [['texto'], 'safe'],
         ];
     }
 
@@ -57,11 +57,11 @@ class CompetenciadescripcionSearch extends Competenciadescripcion
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'idTipoComp' => $this->idTipoComp,
+            'idtipocomp' => $this->idtipocomp,
             'visible' => $this->visible,
         ]);
 
-        $query->andFilterWhere(['like', 'Texto', $this->Texto]);
+        $query->andFilterWhere(['like', 'texto', $this->texto]);
 
         return $dataProvider;
     }

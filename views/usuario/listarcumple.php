@@ -28,7 +28,7 @@ $this->title = 'Cumpleaños del mes '. $meses[date('n')-1] ;
 <div class="usuario-index">
 
  
-    <h1><?= Html::encode(utf8_decode($this->title)) ?></h1>
+    <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
@@ -60,7 +60,7 @@ $this->title = 'Cumpleaños del mes '. $meses[date('n')-1] ;
             'attribute'=>'area',
             ],
             [
-            'label'=>utf8_decode('Día'),
+            'label'=>'Día',
             'attribute'=>'fechanacimiento',
             ],
  
