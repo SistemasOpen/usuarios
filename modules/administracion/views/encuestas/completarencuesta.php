@@ -78,7 +78,7 @@ use yii\web\Session;
         'dataProvider' => $detalle,
         'filterModel' => null,
         'columns' => $columnas, 
-        //'responsive'=>true,
+        'responsive'=>true,
         //'hover'=>true            
         ]);
     ?>

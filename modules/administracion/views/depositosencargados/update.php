@@ -5,10 +5,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\modules\administracion\models\Depositosencargados */
 
-$this->title = 'Update Depositosencargados: ' . ' ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Depositosencargados', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->title = 'Modificar encargados de depósitos';
+$this->params['breadcrumbs'][] = 'Modificar';
 ?>
 <div class="depositosencargados-update">
 

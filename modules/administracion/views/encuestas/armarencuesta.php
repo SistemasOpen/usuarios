@@ -25,7 +25,7 @@ use app\modules\administracion\models\Competenciadescripcion;
              </div>
     <?PHP } ?>
 
-    <?= $form->field($model, 'idCompetencia')->dropDownList(ArrayHelper::map(Competenciadescripcion::find()->all(), 'id', 'Texto'))?> 
+    <?= $form->field($model, 'idCompetencia')->dropDownList(ArrayHelper::map(Competenciadescripcion::find()->all(), 'id', 'texto'))?> 
 
     <div class="form-group">
         <?= Html::submitButton('Agregar', ['class' => 'btn btn-success']) ?>

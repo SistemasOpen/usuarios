@@ -8,6 +8,8 @@ use app\modules\administracion\models\EvaluadoevaluadorSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\data\ArrayDataProvider;
+use app\models\Usuario;
 
 /**
  * EvaluadoevaluadorController implements the CRUD actions for EvaluadoEvaluador model.
@@ -117,5 +119,87 @@ class EvaluadoevaluadorController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    public function actionAsignarlegajos()        
+    {
+        if(Yii::$app->request->post('id'))
+        {
+            if(Yii::$app->user->identity->sucursal && Yii::$app->user->identity->categorialegajo = 22) 
+            {
+
+                $encuesta = Yii::$app->request->post('id');
+                $sql = "pa_enc_mostrarevaluado ". $encuesta.", ". Yii::$app->user->identity->sucursal;
+                $resultado = Yii::$app->get('dbIntranet')->createCommand($sql)->queryAll();
+
+               $dataProvider = new ArrayDataProvider([
+                        'allModels' => $resultado,
+                        'sort' => [
+                            'attributes' => ['legajo'],
+                        ],
+                        'pagination' => [
+                            'pageSize' => 20,
+                        ],
+                ]);
+                return $this->render('asignarlegajos', [
+                    'dataProvider' => $dataProvider,
+                    'idEncuesta' => $encuesta
+                ]);     
+            }           
+            else {
+                throw new NotFoundHttpException('The requested page does not exist.');
+            }
+
+        } 
+//        elseif (Yii::$app->request->post('selection'))
+        elseif (Yii::$app->request->post('selection'))
+        {
+
+            $seleccion = Yii::$app->request->post('selection');
+
+            $resultado = Evaluadoevaluador::find()->where("encuesta = " . Yii::$app->request->post('encuesta') ." and (evaluador = " . Yii::$app->user->identity->id ." )")->All();
+
+            foreach($resultado as $result)
+            {
+
+                $result->evaluador = 0;
+                $result->save();
+            }
+
+
+            foreach($seleccion as $selecc)
+            {
+                $resultado = Evaluadoevaluador::find()->where("encuesta = " . Yii::$app->request->post('encuesta') ." and (evaluado = " . $selecc ." )")->one();
+
+                $resultado->evaluador = Yii::$app->user->identity->id;
+                $resultado ->save();
+            }
+            
+            return $this->redirect(['asignarlegajos']);     
+        }
+        else
+        {
+                $sql = "select e.id, e.idtipoencuesta, descttipoenc = te.descripcion, encuesta = e.descripcion, e.fDesde, e.fHasta
+                        from encEncuesta e inner join encTipoEncuesta te on e.idTipoEncuesta = te.id 
+                        where (fhasta is null)";
+
+                $resultado = Yii::$app->get('dbIntranet')->createCommand($sql)->queryAll();
+
+               $dataProvider = new ArrayDataProvider([
+                        'allModels' => $resultado,
+                        'sort' => [
+                            'attributes' => ['id'],
+                        ],
+                        'pagination' => [
+                            'pageSize' => 20,
+                        ],
+                ]);
+                return $this->render('seleccionarencuesta', [
+                    'resultado' => $resultado,
+                ]);     
+
+        }
+        
+
     }
 }

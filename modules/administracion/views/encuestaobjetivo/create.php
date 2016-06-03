@@ -4,12 +4,13 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model app\modules\administracion\models\Depositosencargados */
+/* @var $model app\modules\administracion\models\Encuestaobjetivo */
 
-$this->title = 'Agregar encargados de depósitos';
+$this->title = 'Create Encuestaobjetivo';
+$this->params['breadcrumbs'][] = ['label' => 'Encuestaobjetivos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="depositosencargados-create">
+<div class="encuestaobjetivo-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

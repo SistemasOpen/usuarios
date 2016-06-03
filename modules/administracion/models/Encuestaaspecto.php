@@ -63,7 +63,7 @@ class Encuestaaspecto extends \yii\db\ActiveRecord
      */
     public function getIdencuesta0()
     {
-        return $this->hasOne(EncEncuestaPublica::className(), ['id' => 'idencuesta']);
+        return $this->hasOne(Encuestapublica::className(), ['id' => 'idencuesta']);
     }
 
     /**
@@ -71,6 +71,6 @@ class Encuestaaspecto extends \yii\db\ActiveRecord
      */
     public function getIdtipoaspecto0()
     {
-        return $this->hasOne(EncTipoAspecto::className(), ['id' => 'idtipoaspecto']);
+        return $this->hasOne(Tipoaspecto::className(), ['id' => 'idtipoaspecto']);
     }
 }

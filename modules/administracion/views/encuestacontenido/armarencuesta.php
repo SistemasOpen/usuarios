@@ -132,7 +132,7 @@ $this->title = 'Encuestas no publicadas: ' . $modelenc->descripcion;
     </div>
     <input type="hidden" name="idEncuesta" value="<?= $id;?>">
 <?PHP
-    $arrCompetencias=ArrayHelper::map(Competenciadescripcion::find()->all(), 'id', 'Texto');
+    $arrCompetencias=ArrayHelper::map(Competenciadescripcion::find()->all(), 'id', 'texto');
     foreach($arrCompetencias AS &$competencia){
         $competencia=utf8_encode($competencia);
     }
@@ -152,7 +152,7 @@ $this->title = 'Encuestas no publicadas: ' . $modelenc->descripcion;
         'columns' => [
             'idEncuesta0.descripcion',
             [ 'label'=>'Competencia',
-              'attribute'=>'competencia0.Texto',
+              'attribute'=>'competencia0.texto',
             ],
             
             'tipocompetencia0.descripcion',

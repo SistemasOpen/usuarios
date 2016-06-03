@@ -15,23 +15,39 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
+       <?php
+            if(Yii::$app->user->identity->admin)
+            {   
+                echo Html::a('Modificar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']);
+                echo Html::a('    ');
+                echo Html::a('Eliminar', ['delete', 'id' => $model->id], [
+                    'class' => 'btn btn-danger',
+                    'data' => [
+                        'confirm' => 'Está seguro de eliminar este item?',
+                        'method' => 'post',
+                    ],
+                ]);
+            }
+        ?>
     </p>
 
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
-            'iddeposito',
-            'idencargado',
+            [
+                'label'=>'Depósito',
+                'attribute'=>'iddeposito0.nombre',
+            ],
+            [
+                'label'=>'Depósito',
+                'attribute'=>'idencargado.nombre',
+            ],
         ],
     ]) ?>
+
+    <p>
+            <?= Html::a('Volver', ['index'], ['class'=>'btn btn-primary']) ?>
+
+    </p>        
 
 </div>

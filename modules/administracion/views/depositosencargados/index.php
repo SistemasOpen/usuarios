@@ -16,20 +16,28 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Depositosencargados', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Volver', ['/memo/ultimasnovedades'], ['class' => 'btn btn-success']) ?>
+        <?PHP 
+            if(Yii::$app->user->identity->admin)
+            {           
+                echo Html::a('Agregar', ['create'], ['class' => 'btn btn-success']);
+            }
+        ?>
     </p>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'iddeposito',
-            'idencargado',
-
-            ['class' => 'yii\grid\ActionColumn'],
+            'iddeposito0.nombre',
+            'idencargado0.nombre',
+            ['class' => 'yii\grid\ActionColumn',
+            'header'=>'Consulta',
+            'template' =>'{view}',
+            'headerOptions' => ['style'=>'width:100px; text-align:center'],
+            'contentOptions' => ['style'=>'width:100px; text-align:center'],
+            ],
         ],
     ]); ?>
 

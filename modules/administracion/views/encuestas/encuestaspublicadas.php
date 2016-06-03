@@ -11,6 +11,15 @@ $this->params['breadcrumbs'][] = $this->title;
 */
 $this->title = 'Encuestas publicadas';
 ?>
+
+          <?PHP if (Yii::$app->getSession()->getFlash('success'))
+            {?>
+            <hr style="clear:both;">
+            <div class="alert alert-success">
+            <?=Yii::$app->getSession()->getFlash('success');?>
+            </div>
+          <?PHP } ?>
+
 <div class="encuesta-index">
 
     <h1><?= Html::encode($this->title) ?></h1>

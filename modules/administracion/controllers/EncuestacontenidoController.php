@@ -9,6 +9,7 @@ use app\modules\administracion\models\EncuestacontenidoSearch;
 use app\modules\administracion\models\Encuesta;
 use app\modules\administracion\models\Tipomovimiento;
 use app\modules\administracion\models\Registro;
+use app\modules\administracion\models\Tipocompetencia;
 
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -152,20 +153,20 @@ class EncuestacontenidoController extends Controller
             }
             else
             {
-                 $tipocomp = Competenciadescripcion::find()->where('id = '. $orden['idCompetencia'])->one();
+                $tipocomp = Competenciadescripcion::find()->where('id = '. $orden['idCompetencia'])->one();
 
                 $model->idEncuesta = $encuestaid;
                 $model->idCompetencia = $orden['idCompetencia'];
-                $model->tipocompetencia = $tipocomp['idTipoComp'];   
+                $model->tipocompetencia = $tipocomp['idtipocomp'];   
                 $model->save();
 
-                $tipocomp = Tipocompetencia::find()->where('id = ' . '$idCompetencia')->one();
+                $tipocomp = Tipocompetencia::find()->where('id = ' .  $model->tipocompetencia)->one();
 
                 $registro = new Registro();
                 $registro->usuario = Yii::$app->user->identity->legajo;
                 $registro->fecha = date('Ymd');
                 $registro->tipomovimiento = 7; //agregar item de encuesta esta fijo por tabla
-                $registro->observaciones = 'Competencia: ' . $tipocomp->descripcion . ' eliminada';
+                $registro->observaciones = 'Competencia: ' . $tipocomp['descripcion'] . ' agregada';
                 $registro->encuesta = $encuestaid;
                 $registro->save();
 
@@ -226,7 +227,8 @@ class EncuestacontenidoController extends Controller
             if ($modelo)
             {
 
-                $tipocomp = Tipocompetencia::find()->where('id = ' . '$idCompetencia')->one();
+                $tipocomp = Competenciadescripcion::find()->where('id = '. $idCompetencia)->one();
+                $tipocomp = Tipocompetencia::find()->where('id = ' . $tipocomp['idtipocomp'])->one();
 
                 $registro = new Registro();
                 $registro->usuario = Yii::$app->user->identity->legajo;
