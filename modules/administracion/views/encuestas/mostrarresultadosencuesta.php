@@ -36,5 +36,5 @@ $idfun   = Yii::$app->session['encuesta']['idfun'];
 </div>
 <p>
     <?= Html::a('Volver', Yii::$app->request->referrer, ['class'=>'btn btn-primary']) ?>
-    <?= Html::a('Siguiente', ['encuestas/completaraspectos','id'=>$id], ['class'=>'btn btn-primary']) ?>
+    <?= Html::a('Siguiente', ['encuestas/completaraspectos'], ['class'=>'btn btn-primary']) ?>
 </p>  

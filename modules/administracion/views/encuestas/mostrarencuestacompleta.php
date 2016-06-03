@@ -29,7 +29,7 @@ use yii\web\Session;
 </div>
 
 <p>
-    <?= Html::a('Volver', ['/administracion/encuestas/completarencuesta','id'=>$id,'fun'=> $idfun-1], ['class'=>'btn btn-primary']) ?>
-    <?= Html::a('Siguiente', ['/administracion/encuestas/completarencuesta','id'=>$id,'fun'=> $idfun], ['class'=>'btn btn-primary']) ?>
+    <?= Html::a('Volver', ['/administracion/encuestas/completarencuestafuncional','id'=>$id,'fun'=> $idfun-1], ['class'=>'btn btn-primary']) ?>
+    <?= Html::a('Siguiente', ['/administracion/encuestas/completarencuestafuncional','id'=>$id,'fun'=> $idfun], ['class'=>'btn btn-primary']) ?>
 </p>  
 </div>

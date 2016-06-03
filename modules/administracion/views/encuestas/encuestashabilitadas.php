@@ -31,7 +31,7 @@ use yii\web\Session;
             'template'  => '{completarencuesta}', 
             'buttons'   => [ 'completarencuesta' => function($url, $model) 
                                 { return Html::a('<span class="glyphicon glyphicon-forward"></span>', 
-                                                    ['completarencuesta', 'id' => $model['Encuesta'], 'fun'=>'1'], 
+                                                    ['completarencuestafuncional', 'id' => $model['Encuesta'], 'fun'=>'1'], 
                                                     ['title' => Yii::t('yii', 'completarencuesta'), 
                                                      'data-pjax'=>'0' 
                                                     ]) ;

@@ -52,9 +52,9 @@ class EncuestasController extends Controller {
                             'cancelarpublicacion',
                             'encuestasfinalizadas',
                             'encuestashabilitadas',
-                            'completarencuesta',
+                            'completarencuestafuncional',
                             'mostrarfuncioncompleta',
-                            'mostrarresultadosencuesta',
+                            'mostrarresultadosencuestafuncional',
                             'actualizardetalle',
                             'completaraspectos',
                             'completarobjetivo',
@@ -393,7 +393,7 @@ class EncuestasController extends Controller {
                 }
             } else {
                 Yii::$app->session->setFlash('error', 'Faltan completar Items, por favor completelos');
-                return $this->redirect(['completarencuesta', 'id' => $id, 'fun' => $fun]);
+                return $this->redirect(['completarencuestafuncional', 'id' => $id, 'fun' => $fun]);
             }
         } catch (Exception $e) {
             Log::trace("Error : " . $e);
@@ -438,6 +438,34 @@ class EncuestasController extends Controller {
 
     public function actionActualizardetalle($id, $valor) {
         try {
+            $model = Encuestadetalle::find()->where('id = ' . $id)->One();
+            $model->seleccion = $valor;
+            $model->save();
+
+            \Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
+            return 'true';
+        } catch (Exception $e) {
+            Log::trace("Error : " . $e);
+            return 'false';
+        }
+    }
+    
+    public function actionGrabarresultados($id) {
+        try {
+            
+            $model = new Encuestavalores();
+
+            if (Yii::$app->request->post()) {
+                $post = Yii::$app->request->post();
+                $model->idpublica = $id;
+                $model->nivel = $post['rbnivel'];
+                $model->texto = $post['objetivo'];
+                $model->recomendacion = $post['rbreco'];
+                $model->save();
+
+                return $this->render('completargracias', ['id' => $id]);
+            }
+            
             $model = Encuestadetalle::find()->where('id = ' . $id)->One();
             $model->seleccion = $valor;
             $model->save();

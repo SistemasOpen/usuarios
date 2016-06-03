@@ -75,10 +75,10 @@ use yii\web\Session;
         //print_r($columnas);exit;
 
         echo GridView::widget([
-        'dataProvider' => $detalle,
+        'dataProvider' => utf8_encode($detalle),
         'filterModel' => null,
         'columns' => $columnas, 
-        'responsive'=>true,
+        //'responsive'=>true,
         //'hover'=>true            
         ]);
     ?>
