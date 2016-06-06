@@ -44,7 +44,7 @@ class Encuestapublica extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['idencuesta', 'idEvaluado', 'idEvaluador'], 'integer'],
+            [['idencuesta', 'idEvaluado', 'idEvaluador', 'encRelacionada'], 'integer'],
             [['fecha'], 'safe']
         ];
     }
@@ -56,43 +56,44 @@ class Encuestapublica extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'idencuesta' => 'Idencuesta',
+            'idencuesta' => 'Encuesta',
             'idEvaluado' => 'Id Evaluado',
             'idEvaluador' => 'Id Evaluador',
             'fecha' => 'Fecha',
+            'encRelacionada' => 'Relacionada',
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getEncComentarios()
+    public function getComentarios()
     {
-        return $this->hasMany(EncComentarios::className(), ['idencuesta' => 'id']);
+        return $this->hasMany(EncComentarios::className(), ['idpublica' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getEncEncuestaAspectos()
+    public function getEncuestaAspectos()
     {
-        return $this->hasMany(EncEncuestaAspecto::className(), ['idencuesta' => 'id']);
+        return $this->hasMany(EncEncuestaAspecto::className(), ['idpublica' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getEncEncuestaDetalles()
+    public function getEncuestaDetalles()
     {
-        return $this->hasMany(EncEncuestaDetalle::className(), ['idencuesta' => 'id']);
+        return $this->hasMany(EncEncuestaDetalle::className(), ['idpublica' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getEncEncuestaObjetivos()
+    public function getEncuestaObjetivos()
     {
-        return $this->hasMany(EncEncuestaObjetivo::className(), ['idEncuesta' => 'id']);
+        return $this->hasMany(EncEncuestaObjetivo::className(), ['idpublica' => 'id']);
     }
 
     /**
@@ -100,14 +101,14 @@ class Encuestapublica extends \yii\db\ActiveRecord
      */
     public function getIdencuesta0()
     {
-        return $this->hasOne(EncEncuesta::className(), ['id' => 'idencuesta']);
+        return $this->hasOne(EncEncuesta::className(), ['id' => 'idpublica']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getEncEncuestaValores()
+    public function getEncuestaValores()
     {
-        return $this->hasMany(EncEncuestaValores::className(), ['idencuesta' => 'id']);
+        return $this->hasMany(EncEncuestaValores::className(), ['idpublica' => 'id']);
     }
 }

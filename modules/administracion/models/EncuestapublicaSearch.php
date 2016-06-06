@@ -18,7 +18,7 @@ class EncuestapublicaSearch extends Encuestapublica
     public function rules()
     {
         return [
-            [['id', 'idencuesta', 'idEvaluado', 'idEvaluador'], 'integer'],
+            [['id', 'idencuesta', 'idEvaluado', 'idEvaluador', 'encRelacionada'], 'integer'],
             [['fecha'], 'safe'],
         ];
     }
@@ -61,6 +61,7 @@ class EncuestapublicaSearch extends Encuestapublica
             'idEvaluado' => $this->idEvaluado,
             'idEvaluador' => $this->idEvaluador,
             'fecha' => $this->fecha,
+            'encRelacionada' => $this->encRelacionada,
         ]);
 
         return $dataProvider;

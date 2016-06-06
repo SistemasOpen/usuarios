@@ -54,7 +54,7 @@ use yii\web\Session;
             ],
             [
                 'attribute' => 'Competencia',
-                'value'     => 'Competencia',
+                'value'     => utf8_encode('Competencia'),
             ],
                 
             'Desarrollo',
@@ -75,7 +75,7 @@ use yii\web\Session;
         //print_r($columnas);exit;
 
         echo GridView::widget([
-        'dataProvider' => utf8_encode($detalle),
+        'dataProvider' => $detalle,
         'filterModel' => null,
         'columns' => $columnas, 
         //'responsive'=>true,

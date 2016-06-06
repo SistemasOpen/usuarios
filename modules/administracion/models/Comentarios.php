@@ -40,7 +40,8 @@ class Comentarios extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['idencuesta', 'idconsigna', 'orden'], 'integer'],
+            [['idpublica', 'idconsigna', 'orden'], 'integer'],
+            [['idpublica', 'idconsigna'], 'required'],
             [['detalle'], 'string']
         ];
     }
@@ -52,8 +53,8 @@ class Comentarios extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'idencuesta' => 'Idencuesta',
-            'idconsigna' => 'Idconsigna',
+            'idpublica' => 'Encuesta',
+            'idconsigna' => 'Consigna',
             'detalle' => 'Detalle',
             'orden' => 'Orden',
         ];
@@ -72,6 +73,6 @@ class Comentarios extends \yii\db\ActiveRecord
      */
     public function getIdencuesta0()
     {
-        return $this->hasOne(EncEncuestaResultado::className(), ['id' => 'idencuesta']);
+        return $this->hasOne(EncEncuestaPublica::className(), ['id' => 'idpublica']);
     }
 }

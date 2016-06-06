@@ -41,8 +41,8 @@ class Encuestavalores extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['idencuesta', 'idtipocompetencia'], 'integer'],
-            [['individual', 'general', 'ponderacion', 'total'], 'number']
+            [['idpublica', 'idtipocompetencia'], 'integer'],
+            [['subtotal', 'ponderacion', 'total'], 'number']
         ];
     }
 
@@ -53,10 +53,9 @@ class Encuestavalores extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'idencuesta' => 'Idencuesta',
-            'idtipocompetencia' => 'Idtipocompetencia',
-            'individual' => 'Individual',
-            'general' => 'General',
+            'idencuesta' => 'Encuesta',
+            'idtipocompetencia' => 'Tipo Competencia',
+            'subtotal' => 'Subtotal',
             'ponderacion' => 'Ponderacion',
             'total' => 'Total',
         ];
@@ -67,6 +66,6 @@ class Encuestavalores extends \yii\db\ActiveRecord
      */
     public function getIdencuesta0()
     {
-        return $this->hasOne(EncEncuestaPublica::className(), ['id' => 'idencuesta']);
+        return $this->hasOne(EncEncuestaPublica::className(), ['id' => 'idpublica']);
     }
 }

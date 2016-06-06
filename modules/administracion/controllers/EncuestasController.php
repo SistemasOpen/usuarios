@@ -421,12 +421,11 @@ class EncuestasController extends Controller {
                 $valor = Array('id' => (count($list1) + 1), 'Competencia' => 'Total Competencias', 'Totalfun' => '', 'Cantfun' => '', 'Ponderacion' => '', 'Subtotal' => '', 'Totales' => $total);
                 array_push($list1, $valor);
 
-
                 $model = new ArrayDataProvider(['allModels' => $list1]);
-                return $this->render('mostrarresultadosencuesta', [ 'model' => $model,
-                            'id' => $id
-                ]);
+                return $this->render('mostrarresultadosencuesta', [ 'model' => $model, 'id' => $id ]);
+                
             } else {
+                
                 Yii::$app->session->setFlash('error', 'Faltan completar Items, por favor completelos');
                 return $this->redirect(['completarencuesta', 'id' => $id, 'fun' => '1']);
             }
@@ -450,28 +449,31 @@ class EncuestasController extends Controller {
         }
     }
     
-    public function actionGrabarresultados($id) {
+    public function actionGrabarresultados() {
         try {
             
-            $model = new Encuestavalores();
-
             if (Yii::$app->request->post()) {
+                
                 $post = Yii::$app->request->post();
-                $model->idpublica = $id;
-                $model->nivel = $post['rbnivel'];
-                $model->texto = $post['objetivo'];
-                $model->recomendacion = $post['rbreco'];
-                $model->save();
+    
+                $sql1 = 'pa_enc_mostrar_resultados_encuesta ' . $post['idEncuesta'];
+                $command1 = Yii::$app->dbIntranet->createCommand($sql1);
+                $list1 = $command1->queryAll();
 
-                return $this->render('completargracias', ['id' => $id]);
+                //$model = Encuestavalores::find()->where('id = ' . $post['idEncuesta'])->all();
+                                
+                foreach ($list1 as $fila => $valor) 
+                {
+                    $model = new Encuestavalores();
+                    $model->idpublica = $post['idEncuesta'];
+                    $model->idtipocompetencia = $valor['Competencia'];
+                    $model->subtotal = ($valor['Subtotal']);
+                    $model->ponderacion = $valor['Ponderacion'];
+                    $model->total = $valor['Totales'];
+                    $model->save();
+                }
+                return $this->render('completaraspectos', ['id' => $post['idEncuesta']]);
             }
-            
-            $model = Encuestadetalle::find()->where('id = ' . $id)->One();
-            $model->seleccion = $valor;
-            $model->save();
-
-            \Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
-            return 'true';
         } catch (Exception $e) {
             Log::trace("Error : " . $e);
             return 'false';
@@ -498,7 +500,6 @@ class EncuestasController extends Controller {
             if (Yii::$app->request->post()) {
                 $post = Yii::$app->request->post();
                 
-                
                 print_r($post); exit();
                 
                 $model->idencuesta = $id;
@@ -518,7 +519,11 @@ class EncuestasController extends Controller {
 
     public function actionCompletarobjetivo($id) {
         try {
-            $model = new EncuestaObjetivo();
+            
+            $model = Encuestaobjetivo::find()->where( 'idencuesta = ' . $id)->All();
+            
+            if ($model == null)
+                $model = new EncuestaObjetivo();
 
             if (Yii::$app->request->post()) {
                 $post = Yii::$app->request->post();

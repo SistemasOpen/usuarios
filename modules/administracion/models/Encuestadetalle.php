@@ -50,7 +50,7 @@ class Encuestadetalle extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'idencuesta' => 'Encuesta',
+            'idpublica' => 'Encuesta',
             'idcompetencia' => 'Competencia',
             'seleccion' => 'Seleccion',
         ];

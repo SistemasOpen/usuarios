@@ -18,8 +18,8 @@ class EncuestavaloresSearch extends Encuestavalores
     public function rules()
     {
         return [
-            [['id', 'idencuesta', 'idtipocompetencia'], 'integer'],
-            [['individual', 'general', 'ponderacion', 'total'], 'number'],
+            [['id', 'idpublica', 'idtipocompetencia'], 'integer'],
+            [['subtotal', 'ponderacion', 'total'], 'number'],
         ];
     }
 
@@ -57,10 +57,9 @@ class EncuestavaloresSearch extends Encuestavalores
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'idencuesta' => $this->idencuesta,
+            'idpublica' => $this->idpublica,
             'idtipocompetencia' => $this->idtipocompetencia,
-            'individual' => $this->individual,
-            'general' => $this->general,
+            'subtotal' => $this->subtotal,
             'ponderacion' => $this->ponderacion,
             'total' => $this->total,
         ]);

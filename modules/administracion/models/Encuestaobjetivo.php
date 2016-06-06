@@ -39,7 +39,7 @@ class Encuestaobjetivo extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['idencuesta', 'nivel', 'texto', 'recomendacion'], 'required'],
+            [['idpublica', 'nivel', 'texto', 'recomendacion'], 'required'],
             [['idencuesta', 'nivel', 'recomendacion'], 'integer'],
             [['texto'], 'string']
         ];
