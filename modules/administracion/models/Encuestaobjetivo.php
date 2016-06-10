@@ -40,7 +40,7 @@ class Encuestaobjetivo extends \yii\db\ActiveRecord
     {
         return [
             [['idpublica', 'nivel', 'texto', 'recomendacion'], 'required'],
-            [['idencuesta', 'nivel', 'recomendacion'], 'integer'],
+            [['idpublica', 'nivel', 'recomendacion'], 'integer'],
             [['texto'], 'string']
         ];
     }
@@ -52,7 +52,7 @@ class Encuestaobjetivo extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'idencuesta' => 'Encuesta',
+            'idpublica' => 'Encuesta',
             'nivel' => 'Nivel',
             'texto' => 'Texto',
             'recondacion' => 'Recomendacion',
@@ -64,6 +64,6 @@ class Encuestaobjetivo extends \yii\db\ActiveRecord
      */
     public function getIdencuesta0()
     {
-        return $this->hasOne(EncEncuestaPublica::className(), ['id' => 'idencuesta']);
+        return $this->hasOne(EncEncuestaPublica::className(), ['id' => 'idpublica']);
     }
 }

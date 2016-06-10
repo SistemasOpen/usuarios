@@ -8,13 +8,20 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
+<?php if(Yii::$app->getSession()->hasFlash('error')) { ?>
+    <div class="alert alert-danger">
+        <?php echo Yii::$app->getSession()->getFlash('error'); ?>
+    </div>
+<?php } ?>
+
 <div class="encuesta-form">
 
     <?php
-        $form = ActiveForm::begin(); 
-     
+        $form = ActiveForm::begin(['action'=> ['encuestas/completaraspectos']]); 
+        $i = 0;
         foreach ($model as $aspecto => $valor) 
         {
+            $i++;
     ?>
     
     <div class='panel panel-info'> 
@@ -24,9 +31,9 @@ use yii\widgets\ActiveForm;
         <div class='panel-body'> 
             <div class='row'>
                 <div class='col-md-12'>
-                    <input type='hidden' id='id<?=$valor['id']?>' name='Id<?=$valor['id']?>' value='<?=$valor['id']?>'/>
-                    <input type='hidden' id='as<?=$valor['idtipoaspecto']?>' name='As<?=$valor['idtipoaspecto']?>' value='<?=$valor['idtipoaspecto']?>'/>
-                    <textarea class='form-control' name='tex<?=$valor['id']?>'  id='tex<?=$valor['id']?>' rows='4' maxlength="1000"><?=$valor['texto']?></textarea>
+                    <input type='hidden' id='id1<?=$i?>' name='id[]' value='<?=$valor['id']?>'/>
+                    <input type='hidden' id='id2<?=$i?>' name='tipo[]' value='<?=$valor['idtipoaspecto']?>'/>
+                    <textarea class='form-control' id='tex<?=$i?>' name='text[]' rows='4' maxlength="1000"><?=$valor['texto']?></textarea>
                 </div>
             </div>
         </div>

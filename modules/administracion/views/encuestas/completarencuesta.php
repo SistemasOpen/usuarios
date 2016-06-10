@@ -36,11 +36,11 @@ use yii\web\Session;
     ?>
 
     <?php 
+        $idEncuesta = Yii::$app->session['encuesta']['idEncuesta'];
         $funcion = Yii::$app->session['encuesta']['descfun']; 
         $idfun   = Yii::$app->session['encuesta']['idfun'];
     ?>  
 
-    <?php $funcion = Yii::$app->session['encuesta']['descfun']; ?>
     <?= "<H1>$funcion</H1>"; ?>
 
     <?php
@@ -72,8 +72,6 @@ use yii\web\Session;
             array_push($columnas,$unaMas);
         }
 			
-        //print_r($columnas);exit;
-
         echo GridView::widget([
         'dataProvider' => $detalle,
         'filterModel' => null,
@@ -85,9 +83,8 @@ use yii\web\Session;
 
     <p>
          <?= Html::a('Volver', Yii::$app->request->referrer, ['class'=>'btn btn-primary']) ?>
-         <?= Html::a('Siguiente', ['encuestas/mostrarfuncioncompleta','id'=>$id,'fun'=> $idfun], ['class'=>'btn btn-primary']) ?>
+         <?= Html::a('Siguiente', ['encuestas/mostrarfuncioncompleta','id'=>$idEncuesta,'fun'=> $idfun], ['class'=>'btn btn-primary']) ?>
     </p>  
-
 
 </div>
 

@@ -18,7 +18,7 @@ class EncuestaaspectoSearch extends Encuestaaspecto
     public function rules()
     {
         return [
-            [['id', 'idencuesta', 'idtipoaspecto'], 'integer'],
+            [['id', 'idpublica', 'idtipoaspecto'], 'integer'],
             [['texto'], 'safe'],
         ];
     }
@@ -57,7 +57,7 @@ class EncuestaaspectoSearch extends Encuestaaspecto
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'idencuesta' => $this->idencuesta,
+            'idpublica' => $this->idencuesta,
             'idtipoaspecto' => $this->idtipoaspecto,
         ]);
 

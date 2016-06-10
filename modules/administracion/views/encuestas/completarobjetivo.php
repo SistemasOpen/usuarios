@@ -11,10 +11,15 @@ use app\modules\administracion\models\EncuestaObjetivo;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
+<?php if(Yii::$app->getSession()->hasFlash('error')) { ?>
+    <div class="alert alert-danger">
+        <?php echo Yii::$app->getSession()->getFlash('error'); ?>
+    </div>
+<?php } ?>
+
 <div class='encuesta-form'>
 
-    <?php $form = ActiveForm::begin(); ?>
-
+    <?php $form = ActiveForm::begin(['action'=> ['encuestas/completarobjetivo']]); ?>
     <div class='panel panel-info'> 
         <div class='panel-heading'> 
             <H3 class='panel-title'>Nivel de Cumplimiento de Objetivos Propuestos en la Evaluacion Anterior</H3> 
@@ -23,17 +28,17 @@ use app\modules\administracion\models\EncuestaObjetivo;
             <div class='row'>
                 <div class='col-md-4'>
                     <label class='radio-inline'>
-                        <input type='radio' name='rbnivel' id='rbalto' value='1'> ALTO
+                        <input type='radio' name='rbnivel' id='rbalto' value='1' <?=($model[0]['nivel'] == 1) ? "checked=''" : ''?> > ALTO
                     </label>
                 </div>
                 <div class="col-md-4">
                     <label class='radio-inline active'>
-                        <input type='radio' name='rbnivel' id='rbmedio' value='2' checked=''> MEDIO
+                        <input type='radio' name='rbnivel' id='rbmedio' value='2' <?=($model[0]['nivel'] == 2) ? "checked=''" : ''?> > MEDIO
                     </label>
                 </div>
                 <div class="col-md-4">
                     <label class='radio-inline'>
-                        <input type='radio' name='rbnivel' id='rbbajo' value='3'> BAJO
+                        <input type='radio' name='rbnivel' id='rbbajo' value='3' <?=($model[0]['nivel'] == 3) ? "checked=''" : ''?> > BAJO
                     </label>
                 </div>
             </div>
@@ -47,7 +52,7 @@ use app\modules\administracion\models\EncuestaObjetivo;
         <div class="panel-body"> 
             <div class="row">
                 <div class="col-md-12">
-                    <textarea class='form-control' name='objetivo' id='objetivo' rows='4' maxlength="1000"></textarea>
+                    <textarea class='form-control' name='objetivo' id='objetivo' rows='4' maxlength="1000"><?=$model[0]['texto']?></textarea>
                 </div>
             </div>
         </div>
@@ -61,12 +66,12 @@ use app\modules\administracion\models\EncuestaObjetivo;
             <div class="row">
                 <div class="col-md-4">
                     <label class='radio-inline active'>
-                        <input type='radio' name='rbreco' id='rbcont' value='1' checked=''> Continua en la funcion
+                        <input type='radio' name='rbreco' id='rbcont' value='1' <?=($model[0]['recomendacion'] == 1) ? "checked=''" : ''?> > Continua en la funcion
                     </label>
                 </div>
                 <div class="col-md-4">
                     <label class='radio-inline'>
-                        <input type='radio' name='rbreco' id='rbreca' value='2'> Se solicita re categorizacion (Adjuntar solicitud especifica)
+                        <input type='radio' name='rbreco' id='rbreca' value='2' <?=($model[0]['recomendacion'] == 2) ? "checked=''" : ''?> > Se solicita re categorizacion (Adjuntar solicitud especifica)
                     </label>
                 </div>
             </div>
@@ -74,7 +79,7 @@ use app\modules\administracion\models\EncuestaObjetivo;
     </div>    
 
     <div class="form-group">
-        <?= Html::a('Volver', Yii::$app->request->referrer, ['class'=>'btn btn-primary']) ?>
+        <?= Html::a('Volver', ['encuestas/completaraspectos'], ['class'=>'btn btn-primary']) ?>
         <?= Html::submitButton('Siguiente', ['class' => 'btn btn-primary']) ?>
     </div>
 

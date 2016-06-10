@@ -9,8 +9,8 @@ use yii\widgets\ActiveForm;
 /* @var $model app\modules\Encuesta\models\Encuesta */
 
 //$this->params['breadcrumbs'][] = ['label' => 'Encuesta', 'url' => ['index']];
-$funcion = Yii::$app->session['encuesta']['descfun']; 
-$idfun   = Yii::$app->session['encuesta']['idfun'];
+//$funcion = Yii::$app->session['encuesta']['descfun']; 
+//$idfun   = Yii::$app->session['encuesta']['idfun'];
 
 ?>
 
@@ -18,7 +18,6 @@ $idfun   = Yii::$app->session['encuesta']['idfun'];
 
     <?php 
     $form = ActiveForm::begin(['action'=> ['encuestas/grabarresultados']]); ?>
-        <input type='hidden' id='idEncuesta' name='idEncuesta' value='<?=$id?>'/>
         <div class="panel panel-info"> 
             <div class="panel-heading"> 
                 <H3 class="panel-title"><?= "Nivel General de Desempeño"; ?></H3> 

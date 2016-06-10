@@ -193,12 +193,12 @@ class EncuestasController extends Controller {
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
-          Yii::$app->get('dbIntranet')->createCommand('SET QUOTED_IDENTIFIER ON; SET ANSI_WARNINGS ON')->execute();        
-           $resultado = Yii::$app->get('dbIntranet')->createCommand('pa_enc_grabaPublica '. $model->id)->queryOne();
-           $nimport=count($resultado);
+            Yii::$app->get('dbIntranet')->createCommand('SET QUOTED_IDENTIFIER ON; SET ANSI_WARNINGS ON')->execute();
+            $resultado = Yii::$app->get('dbIntranet')->createCommand('pa_enc_grabaPublica ' . $model->id)->queryOne();
+            $nimport = count($resultado);
 
-           if ( $nimport>0)
-           Yii::$app->session->setFlash('success','La encuesta fue publicada con éxito');  
+            if ($nimport > 0)
+                Yii::$app->session->setFlash('success', 'La encuesta fue publicada con éxito');
 //             else
 //            Yii::$app->session->setFlash('success','Ya fueron importados todos los usuarios.');  
 
@@ -310,6 +310,17 @@ class EncuestasController extends Controller {
     public function actionCompletarencuestafuncional($id, $fun) {
         try {
 
+            $session = yii::$app->session;
+            $session['encuesta'] = ['idEncuesta' => $id];
+
+
+            $model = Encuestadetalle::find()->where('idpublica = ' . $id)->All();
+            if ($model == null) {
+                $sql1 = 'pa_enc_insertar_detalle_aspectos_objetivos ' . $id;
+                $command1 = Yii::$app->dbIntranet->createCommand($sql1);
+                $command1->execute();
+            }
+
             $sql1 = 'pa_enc_ver_cabeza ' . $id;
             $command1 = Yii::$app->dbIntranet->createCommand($sql1);
             $list1 = $command1->queryAll();
@@ -323,8 +334,8 @@ class EncuestasController extends Controller {
         }
 
         if (count($list2) > 0) {
-            $session = yii::$app->session;
-            $session['encuesta'] = ['id' => $id, 'idfun' => $fun, 'descfun' => $list2[0]['Funcion']];
+
+            $session['encuesta'] = ['idEncuesta' => $id, 'idfun' => $fun, 'descfun' => $list2[0]['Funcion']];
 
             $dpDatos1 = new ArrayDataProvider(['allModels' => $list1]);
             $dpDatos2 = new ArrayDataProvider(['allModels' => $list2]);
@@ -345,7 +356,7 @@ class EncuestasController extends Controller {
 
                 if (count($list1) > 0) {
                     $session = yii::$app->session;
-                    $session['encuesta'] = ['id' => $id, 'idfun' => '0', 'descfun' => ''];
+                    $session['encuesta'] = ['idEncuesta' => $id, 'idfun' => '0', 'descfun' => ''];
 
                     $total = 0;
                     for ($i = 0; $i < count($list1); $i++) {
@@ -356,9 +367,7 @@ class EncuestasController extends Controller {
                     array_push($list1, $valor);
 
                     $model = new ArrayDataProvider(['allModels' => $list1]);
-                    return $this->render('mostrarresultadosencuesta', [ 'model' => $model,
-                                'id' => $id
-                    ]);
+                    return $this->render('mostrarresultadosencuesta', [ 'model' => $model, 'id' => $id]);
                 } else {
                     Yii::$app->session->setFlash('error', 'Faltan completar Items, por favor completelos');
                     return $this->redirect(['completarencuesta', 'id' => $id, 'fun' => '1']);
@@ -370,9 +379,13 @@ class EncuestasController extends Controller {
         }
     }
 
-    public function actionMostrarfuncioncompleta($id, $fun) {
+    public function actionMostrarfuncioncompleta($fun) {
 
         try {
+            //Recupero la encuesta Activa
+            $session = yii::$app->session;
+            $id = $session['encuesta']['idEncuesta'];
+
             //recupero los valores items totales de la encuesta y los que estan completos
             $sql1 = 'pa_enc_verificar_encuesta_completa ' . $id . ', ' . $fun;
             $command1 = Yii::$app->dbIntranet->createCommand($sql1);
@@ -401,9 +414,14 @@ class EncuestasController extends Controller {
         }
     }
 
-    public function actionMostrarresultadosencuestafuncional($id) {
+    public function actionMostrarresultadosencuestafuncional() {
 
         try {
+
+            //Recupero la encuesta Activa
+            $session = yii::$app->session;
+            $id = $session['encuesta']['idEncuesta'];
+
             //number_format($total,2,",",".")
             $sql1 = 'pa_enc_mostrar_resultados_encuesta ' . $id;
             $command1 = Yii::$app->dbIntranet->createCommand($sql1);
@@ -411,7 +429,7 @@ class EncuestasController extends Controller {
 
             if (count($list1) > 0) {
                 $session = yii::$app->session;
-                $session['encuesta'] = ['id' => $id, 'idfun' => '0', 'descfun' => ''];
+                $session['encuesta'] = ['idEncuesta' => $id, 'idfun' => '0', 'descfun' => ''];
 
                 $total = 0;
                 for ($i = 0; $i < count($list1); $i++) {
@@ -422,21 +440,22 @@ class EncuestasController extends Controller {
                 array_push($list1, $valor);
 
                 $model = new ArrayDataProvider(['allModels' => $list1]);
-                return $this->render('mostrarresultadosencuesta', [ 'model' => $model, 'id' => $id ]);
-                
+                return $this->render('mostrarresultadosencuesta', [ 'model' => $model]);
             } else {
-                
+
                 Yii::$app->session->setFlash('error', 'Faltan completar Items, por favor completelos');
-                return $this->redirect(['completarencuesta', 'id' => $id, 'fun' => '1']);
+                return $this->redirect(['completarencuesta', 'fun' => '1']);
             }
         } catch (Exception $e) {
             Log::trace("Error : " . $e);
-            throw new Exception("Error : " . $e); 
+            throw new Exception("Error : " . $e);
         }
     }
 
     public function actionActualizardetalle($id, $valor) {
         try {
+
+
             $model = Encuestadetalle::find()->where('id = ' . $id)->One();
             $model->seleccion = $valor;
             $model->save();
@@ -448,31 +467,36 @@ class EncuestasController extends Controller {
             return 'false';
         }
     }
-    
+
     public function actionGrabarresultados() {
         try {
-            
+
+            //Recupero la encuesta Activa
+            $session = yii::$app->session;
+            $id = $session['encuesta']['idEncuesta'];
+
             if (Yii::$app->request->post()) {
-                
+
                 $post = Yii::$app->request->post();
-    
-                $sql1 = 'pa_enc_mostrar_resultados_encuesta ' . $post['idEncuesta'];
+
+                $sql1 = 'pa_enc_mostrar_resultados_encuesta ' . $id;
                 $command1 = Yii::$app->dbIntranet->createCommand($sql1);
                 $list1 = $command1->queryAll();
 
-                //$model = Encuestavalores::find()->where('id = ' . $post['idEncuesta'])->all();
-                                
-                foreach ($list1 as $fila => $valor) 
-                {
+                foreach ($list1 as $fila) {
                     $model = new Encuestavalores();
-                    $model->idpublica = $post['idEncuesta'];
-                    $model->idtipocompetencia = $valor['Competencia'];
-                    $model->subtotal = ($valor['Subtotal']);
-                    $model->ponderacion = $valor['Ponderacion'];
-                    $model->total = $valor['Totales'];
+                    $model->idpublica = $id;
+                    $model->idtipocompetencia = $fila['id'];
+                    $model->subtotal = ($fila['Subtotal']);
+                    $model->ponderacion = $fila['Ponderacion'];
+                    $model->total = $fila['Totales'];
                     $model->save();
                 }
-                return $this->render('completaraspectos', ['id' => $post['idEncuesta']]);
+
+                $model = Encuestaaspecto::find()
+                                ->joinWith(['idtipoaspecto0'])->where('idpublica = ' . $id)->All();
+
+                return $this->render('completaraspecto', ['model' => $model]);
             }
         } catch (Exception $e) {
             Log::trace("Error : " . $e);
@@ -480,78 +504,89 @@ class EncuestasController extends Controller {
         }
     }
 
-    public function actionCompletaraspectos($id) {
+    public function actionCompletaraspectos() {
         try {
 
-            $model = Encuestaaspecto::find()
-                        ->joinWith(['idtipoaspecto0'])->where( 'idencuesta = ' . $id)->All();
-            
-            if ($model == null)
-            {
-                $sql = 'pa_enc_insertar_aspectos ' . $id;
-                $command1 = Yii::$app->dbIntranet->createCommand($sql);
-                $command1->execute();
-                
-                $model = Encuestaaspecto::find()
-                        ->joinWith(['idtipoaspecto0'])->where( 'idencuesta = ' . $id)->All();
+            //Recupero la encuesta Activa
+            $session = yii::$app->session;
+            $id = $session['encuesta']['idEncuesta'];
 
-            }   
-            
             if (Yii::$app->request->post()) {
                 $post = Yii::$app->request->post();
-                
-                print_r($post); exit();
-                
-                $model->idencuesta = $id;
-                $model->idtipoaspecto = $post['rbnivel'];
-                $model->texto = $post['asp1'];
-                $model->save();
 
-                return $this->render('completarobjetivo', ['id' => $id]);
+                for ($i = 0; $i < count($post['id']); $i++) {
+
+                    //echo $post['id'][$i] . ' - ' . $post['tipo'][$i] . ' - ' . $post['text'][$i] . '</br>';
+
+                    $model = Encuestaaspecto::find()->where('id = ' . $post['id'][$i])
+                            ->andWhere('idtipoaspecto = ' . $post['tipo'][$i])
+                            ->One();
+                    
+                    $model->texto = $post['text'][$i];
+                    $model->validate();
+                    
+                    if ($model->hasErrors()) {
+                        Yii::$app->session->setFlash('error', 'Debe completar los Aspectos');
+                        $model = Encuestaaspecto::find()
+                                ->joinWith(['idtipoaspecto0'])->where('idpublica = ' . $id)->All();
+
+                        return $this->render('completaraspecto', ['model' => $model]);
+                        
+                    } else {
+                        $model->save();
+                    }
+                }
             }
-                            
-            return $this->render('completaraspecto', ['model' => $model, 'id' => $id]);
+
+            $model = Encuestaobjetivo::find()->where('idpublica = ' . $id)->All();
+            return $this->render('completarobjetivo', ['model' => $model]);
         } catch (Exception $e) {
             Log::trace("Error : " . $e);
             throw new Exception("Error : " . $e);
         }
     }
 
-    public function actionCompletarobjetivo($id) {
+    public function actionCompletarobjetivo() {
         try {
-            
-            $model = Encuestaobjetivo::find()->where( 'idencuesta = ' . $id)->All();
-            
-            if ($model == null)
-                $model = new EncuestaObjetivo();
+
+            //Recupero la encuesta Activa
+            $session = yii::$app->session;
+            $id = $session['encuesta']['idEncuesta'];
+            $model = Encuestaobjetivo::find()->where('idpublica = ' . $id)->One();
 
             if (Yii::$app->request->post()) {
                 $post = Yii::$app->request->post();
-                $model->idencuesta = $id;
+
                 $model->nivel = $post['rbnivel'];
                 $model->texto = $post['objetivo'];
                 $model->recomendacion = $post['rbreco'];
-                $model->save();
-
-                return $this->render('completargracias', ['id' => $id]);
+                
+                $model->validate();
+                if ($model->hasErrors()) {
+                    Yii::$app->session->setFlash('error', 'Debe completar el Objetivo.');
+                    $model = Encuestaobjetivo::find()->where('idpublica = ' . $id)->All();
+                    return $this->render('completarobjetivo', ['model' => $model]);
+                        
+                } else {
+                    $model->save();
+                    return $this->render('completargracias', ['id' => $id]);
+                }
             }
 
-            return $this->render('completarobjetivo', ['model' => $model, 'id' => $id]);
+            return $this->render('completarobjetivo', ['model' => $model]);
         } catch (Exception $e) {
             Log::trace("Error : " . $e);
             throw new Exception("Error : " . $e);
         }
     }
 
-    /*
-      public function actionCompletargracias($id)
-      {
-      return $this->render('completargracias', ['id'=>$id]);
-      }
-     */
-
-    public function actionFinalizarencuesta($id) {
+    public function actionFinalizarencuesta() {
         try {
+
+            //Recupero la encuesta Activa
+            $session = yii::$app->session;
+            $id = $session['encuesta']['idEncuesta'];
+
             $model = EncuestaPublica::find()->where('id = ' . $id)->One();
             if ($model != null) {
                 $model->fecha = date('Ymd');

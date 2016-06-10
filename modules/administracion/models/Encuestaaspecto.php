@@ -39,8 +39,8 @@ class Encuestaaspecto extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['idencuesta', 'idtipoaspecto', 'texto'], 'required'],
-            [['idencuesta', 'idtipoaspecto'], 'integer'],
+            [['idpublica', 'idtipoaspecto', 'texto'], 'required'],
+            [['idpublica', 'idtipoaspecto'], 'integer'],
             [['texto'], 'string']
         ];
     }
@@ -52,8 +52,8 @@ class Encuestaaspecto extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'idencuesta' => 'Idencuesta',
-            'idtipoaspecto' => 'Idtipoaspecto',
+            'idpublica' => 'Encuesta',
+            'idtipoaspecto' => 'Tipo Aspecto',
             'texto' => 'Texto',
         ];
     }
@@ -63,7 +63,7 @@ class Encuestaaspecto extends \yii\db\ActiveRecord
      */
     public function getIdencuesta0()
     {
-        return $this->hasOne(Encuestapublica::className(), ['id' => 'idencuesta']);
+        return $this->hasOne(Encuestapublica::className(), ['id' => 'idpublica']);
     }
 
     /**

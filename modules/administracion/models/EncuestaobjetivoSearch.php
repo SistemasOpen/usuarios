@@ -18,7 +18,7 @@ class EncuestaobjetivoSearch extends Encuestaobjetivo
     public function rules()
     {
         return [
-            [['id', 'idencuesta', 'nivel', 'recondacion'], 'integer'],
+            [['id', 'idpublica', 'nivel', 'recondacion'], 'integer'],
             [['texto'], 'safe'],
         ];
     }
@@ -57,7 +57,7 @@ class EncuestaobjetivoSearch extends Encuestaobjetivo
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'idencuesta' => $this->idencuesta,
+            'idpublica' => $this->idpublica,
             'nivel' => $this->nivel,
             'recondacion' => $this->recondacion,
         ]);
