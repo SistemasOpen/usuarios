@@ -6,8 +6,8 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\modules\administracion\models\Competenciadescripcion */
 
-$this->title = $model->Texto;
-$this->params['breadcrumbs'][] = ['label' => 'Competencias (Descripciones)', 'url' => ['index']];
+$this->title = $model->texto;
+$this->params['breadcrumbs'][] = ['label' => 'Competencias Descripciones', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="competenciadescripcion-view">

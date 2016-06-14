@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\modules\administracion\models\Competenciadescripcion */
 
-$this->title = 'Competencias descripcion: ';
+$this->title = 'Competencias Descripciones: ';
 $this->params['breadcrumbs'][] = ['label' => 'Competenciadescripcions', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Modificar';

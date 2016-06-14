@@ -7,7 +7,7 @@ use yii\helpers\Html;
 /* @var $model app\modules\administracion\models\Competenciadescripcion */
 
 //$this->title = 'Create Competenciadescripcion';
-$this->params['breadcrumbs'][] = ['label' => 'Competenciadescripcions', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Competencia Descripciones', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="competenciadescripcion-create">

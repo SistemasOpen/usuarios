@@ -15,9 +15,9 @@ use app\modules\administracion\models\Tipocompetencia;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'Texto')->textInput() ?>
+    <?= $form->field($model, 'texto')->textInput() ?>
 
-    <?= $form->field($model, 'idTipoComp')->dropDownList(ArrayHelper::map(Tipocompetencia::find()->all(), 'id', 'descripcion'))?> 
+    <?= $form->field($model, 'idtipocomp')->dropDownList(ArrayHelper::map(Tipocompetencia::find()->all(), 'id', 'descripcion'))?> 
 
     <?= $form->field($model, 'visible')->checkbox() ?>
 

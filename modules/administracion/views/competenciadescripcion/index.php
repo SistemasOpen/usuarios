@@ -35,10 +35,10 @@ $this->params['breadcrumbs'][] = $this->title;
             [   'label'=>'Texto',
                 'format'=>'raw',
                 'value'=> function ($model) {
-                    return utf8_encode($model['Texto']);
+                    return utf8_encode($model['texto']);
                 },
             ],
-             'idTipoComp0.descripcion',
+             //'idTipoComp0.descripcion',
             [   
                 'label'     => 'Visible',
                 'format'    => 'HTML',
